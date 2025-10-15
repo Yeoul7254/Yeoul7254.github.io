@@ -1,6 +1,8 @@
-# Undawn 요리 레시피
+title: Undawn 요리 레시피
 
 - 레시피 1: 예시 내용
 - 레시피 2: 예시 내용
 
 [← 홈으로](index.md)
+
+footer: ""
