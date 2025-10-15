@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<style>
+  .banner {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .banner-img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+  }
+</style>
+
     <meta charset="UTF-8">
     <title>Undawn 자료실</title>
     <style>
@@ -19,6 +32,10 @@
     </script>
 </head>
 <body>
+    <div class="banner">
+  <img src="언던.jpg" alt="베너 이미지" class="banner-img">
+</div>
+
     <h1>Undawn 자료실</h1>
     <button class="btn" onclick="showTab('home')">홈</button>
     <button class="btn" onclick="showTab('recipe')">음식표</button>
