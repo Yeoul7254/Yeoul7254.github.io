@@ -1,6 +1,6 @@
 # Undawn 자료실
 
-[홈](index.md) | [자료검색](search.md) | [공지사항](notice.md) | [문의하기](contact.md)
+[홈](index.md) | [Undawn 요리 레시피](recipe.md) | [문의하기](contact.md)
 
 ---
 
