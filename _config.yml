@@ -1,4 +1,1 @@
-title: "Undawn 자료실"
-theme: minima            # 원하는 테마명으로 변경
-description: "Undawn 커뮤니티 자료실"
-author: "Yeoul"
+theme: jekyll-theme-so-simple
