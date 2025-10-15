@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Undawn 자료실</title>
+    <style>
+        .content { display: none; }
+        .active { display: block; }
+        .btn { padding:8px 16px; margin:3px; cursor:pointer;}
+    </style>
+    <script>
+        function showTab(tabId) {
+            var tabs = document.getElementsByClassName('content');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <h1>Undawn 자료실</h1>
+    <button class="btn" onclick="showTab('home')">홈</button>
+    <button class="btn" onclick="showTab('recipe')">요리표</button>
+    <button class="btn" onclick="showTab('about')">문의하기</button>
+
+    <div id="home" class="content active">
+        <h2>홈</h2>
+        <p>여기에 메인 컨텐츠 입력</p>
+    </div>
+    <div id="recipe" class="content">
+        <h2>Undawn 음식 레시피</h2>
+        <!-- Airtable 임베드나 표 추가 -->
+        <iframe class="airtable-embed" src="https://airtable.com/embed/xxx" width="100%" height="400"></iframe>
+    </div>
+    <div id="about" class="content">
+        <h2>문의하기</h2>
+        <p>문의 내용 입력</p>
+    </div>
+</body>
+</html>
