@@ -1,6 +1,0 @@
-theme: minima
-title: "Undawn 자료실"
-footer: ""
-include:
-  - recipe.md
-  - docs
