@@ -1,6 +1,5 @@
 # Undawn 요리 레시피
 
-- 레시피 1: 예시 내용
-- 레시피 2: 예시 내용
+<iframe class="airtable-embed" src="https://airtable.com/embed/app5I6URAjgznfAu1/shranTuFZ8QxrIt9y" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
 
 [← 홈으로](index.md)
