@@ -33,18 +33,35 @@
             z-index: 10;
         }
         .btn, .subbtn, .subsubbtn {
-            padding: 8px 16px;
+            padding: 10px 28px;
             margin: 3px;
             cursor: pointer;
-            border: 1px solid #bbb;
-            background: #fff;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: background 0.2s, box-shadow 0.2s;
+            border: none;
+            background: rgba(255,255,255,0.45);
+            color: #1371DF;
+            font-weight: 700;
+            font-size: 1.11rem;
+            border-radius: 999px;
+            transition: 
+              box-shadow 0.22s,
+              background 0.19s,
+              color 0.16s,
+              transform 0.16s;
+            box-shadow: 0 1px 7px rgba(40,120,240,0.08);
+            letter-spacing: -0.5px;
+            outline: none;
+            position: relative;
         }
         .btn:hover, .subbtn:hover, .subsubbtn:hover {
-            background: #f1f3f5;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            background: rgba(50,150,255,0.13);
+            color: #0D4DA2;
+            box-shadow: 0 2px 16px rgba(30,122,233,0.14), 0 1.5px 7px rgba(0,0,0,0.06);
+            transform: translateY(-1.5px) scale(1.035);
+        }
+        .btn:active, .subbtn:active, .subsubbtn:active {
+            background: rgba(22,90,170,0.06);
+            color: #083069;
+            transform: scale(0.97);
         }
         .content { display: none; margin-top: 32px; }
         .active { display: block; }
@@ -178,43 +195,40 @@
         <button class="btn" onclick="toggleSubTabArea()">탐색</button>
 
         <!-- 홈(게시판) -->
-<div id="home" class="content active">
-<div style="display: flex; gap:32px; margin-bottom:36px;">
-    <!-- 커뮤니티 오픈채팅 (왼쪽) -->
-    <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
-        <a href="https://open.kakao.com/o/gpMK702c" target="_blank" style="display:block;">
-            <img src="카카오톡.jpg" alt="카카오톡 로고" style="width:60px; height:60px; border-radius:16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); margin-bottom:11px;">
-        </a>
-        <div style="font-weight:600; font-size:1.09rem; margin-bottom:6px;">커뮤니티 오픈채팅방</div>
-        <a href="https://open.kakao.com/o/gpMK702c" target="_blank" style="color:#299bce; text-decoration:none; font-size:1.01rem; font-weight:500; margin-left:2px;">바로가기</a>
-    </div>
-    <!-- 라운지 (오른쪽) -->
-    <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
-        <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank" style="display:block;">
-            <img src="치지직.jpg" alt="라운지 로고" style="width:60px; height:60px; border-radius:16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); margin-bottom:11px;">
-        </a>
-        <div style="font-weight:600; font-size:1.09rem; margin-bottom:6px;">라운지 </div>
-        <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank" style="color:#299bce; text-decoration:none; font-size:1.01rem; font-weight:500; margin-left:2px;">바로가기</a>
-    </div>
-</div>
-
-    <!-- 카드/업데이트 내역 시작 -->
-    <div class="update-card">
-        <h2 class="update-title">업데이트 내역</h2>
-        <ul class="update-list">
-            <li>- 탐색 레드우드 보물지도 내용 생성 (2025.10.16)</li>
-        </ul>
-    </div>
-    <div class="plan-card">
-        <h2 class="plan-title">업데이트 예정 내역</h2>
-        <ul class="plan-list">
-            <li>- 어둠의 도시_지하 탐색 내용 생성</li>
-            <li>- 공허를 만든 도시 탐색 내용 생성</li>
-            <li>- 각종 파일작 내용 생성</li>
-        </ul>
-    </div>
-</div>
-
+        <div id="home" class="content active">
+            <div style="display: flex; gap:32px; margin-bottom:36px;">
+                <!-- 커뮤니티 오픈채팅 (왼쪽) -->
+                <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
+                    <a href="https://open.kakao.com/o/gpMK702c" target="_blank" style="display:block;">
+                        <img src="카카오톡.jpg" alt="카카오톡 로고" style="width:60px; height:60px; border-radius:16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); margin-bottom:11px;">
+                    </a>
+                    <div style="font-weight:600; font-size:1.09rem; margin-bottom:6px;">커뮤니티 오픈채팅방</div>
+                    <a href="https://open.kakao.com/o/gpMK702c" target="_blank" class="btn" style="font-size:1.03rem; padding:7px 22px; margin:6px 0 0 0;">바로가기</a>
+                </div>
+                <!-- 라운지 (오른쪽) -->
+                <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
+                    <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank" style="display:block;">
+                        <img src="치지직.jpg" alt="라운지 로고" style="width:60px; height:60px; border-radius:16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); margin-bottom:11px;">
+                    </a>
+                    <div style="font-weight:600; font-size:1.09rem; margin-bottom:6px;">라운지</div>
+                    <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank" class="btn" style="font-size:1.03rem; padding:7px 22px; margin:6px 0 0 0;">바로가기</a>
+                </div>
+            </div>
+            <div class="update-card">
+                <h2 class="update-title">업데이트 내역</h2>
+                <ul class="update-list">
+                    <li>- 탐색 레드우드 보물지도 내용 생성 (2025.10.16)</li>
+                </ul>
+            </div>
+            <div class="plan-card">
+                <h2 class="plan-title">업데이트 예정 내역</h2>
+                <ul class="plan-list">
+                    <li>- 어둠의 도시_지하 탐색 내용 생성</li>
+                    <li>- 공허를 만든 도시 탐색 내용 생성</li>
+                    <li>- 각종 파일작 내용 생성</li>
+                </ul>
+            </div>
+        </div>
 
         <!-- 음식표 -->
         <div id="recipe" class="content">
