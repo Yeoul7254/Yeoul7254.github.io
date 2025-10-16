@@ -94,6 +94,7 @@
             var area = document.getElementById('subtab-area');
             if(area.style.display === 'block') {
                 area.style.display = 'none';
+                hideSubTab(); // 레드우드 서브탭 안보이게
             } else {
                 area.style.display = 'block';
             }
@@ -108,12 +109,27 @@
             document.getElementById(tabId).classList.add('subtab-active');
         }
 
+        function hideSubTab() {
+            var subtabs = document.getElementsByClassName('subtab-content');
+            for (var i = 0; i < subtabs.length; i++) {
+                subtabs[i].classList.remove('subtab-active');
+            }
+            hideSubSubTab();
+        }
+
         function showSubSubTab(tabId) {
             var subsubtabs = document.getElementsByClassName('subcontent');
             for (var i = 0; i < subsubtabs.length; i++) {
                 subsubtabs[i].classList.remove('subactive');
             }
             document.getElementById(tabId).classList.add('subactive');
+        }
+
+        function hideSubSubTab() {
+            var subsubtabs = document.getElementsByClassName('subcontent');
+            for (var i = 0; i < subsubtabs.length; i++) {
+                subsubtabs[i].classList.remove('subactive');
+            }
         }
     </script>
 </head>
@@ -150,7 +166,6 @@
                         <button class="subsubbtn" onclick="showSubSubTab('medical')">구급상자</button>
                         <button class="subsubbtn" onclick="showSubSubTab('tools')">공구함</button>
                         <button class="subsubbtn" onclick="showSubSubTab('treasure')">보물지도</button>
-
                         <div id="military" class="subcontent">
                             <h3>군수품</h3>
                             <p>군수품 관련 내용을 여기에 입력하세요.</p>
