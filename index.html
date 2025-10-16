@@ -35,7 +35,7 @@
         h1 {
             margin-top: 0;
         }
-        .btn, .subbtn {
+        .btn, .subbtn, .subsubbtn {
             padding: 8px 16px;
             margin: 3px;
             cursor: pointer;
@@ -45,7 +45,7 @@
             font-size: 1rem;
             transition: background 0.2s, box-shadow 0.2s;
         }
-        .btn:hover, .subbtn:hover {
+        .btn:hover, .subbtn:hover, .subsubbtn:hover {
             background: #f1f3f5;
             box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
@@ -58,6 +58,16 @@
         }
         .subtab-area {
             margin: 20px 0 0 0;
+        }
+        .subtab-content {
+            display: none;
+            margin-top: 12px;
+        }
+        .subtab-active {
+            display: block;
+        }
+        .subsubtab-area {
+            margin: 16px 0 0 0;
         }
         .subcontent {
             display: none;
@@ -80,15 +90,6 @@
             document.getElementById(tabId).classList.add('active');
         }
 
-        function showSubTab(subId) {
-            var subtabs = document.getElementsByClassName('subcontent');
-            for (var i = 0; i < subtabs.length; i++) {
-                subtabs[i].classList.remove('subactive');
-            }
-            document.getElementById(subId).classList.add('subactive');
-        }
-
-        // '레드우드' 탭 클릭 시 서브탭 보이기/숨기기
         function toggleSubTabArea() {
             var area = document.getElementById('subtab-area');
             if(area.style.display === 'block') {
@@ -96,8 +97,23 @@
             } else {
                 area.style.display = 'block';
             }
-            // 탭 전환도 같이
-            showTab('redwood');
+            showTab('explore');
+        }
+
+        function showSubTab(tabId) {
+            var subtabs = document.getElementsByClassName('subtab-content');
+            for (var i = 0; i < subtabs.length; i++) {
+                subtabs[i].classList.remove('subtab-active');
+            }
+            document.getElementById(tabId).classList.add('subtab-active');
+        }
+
+        function showSubSubTab(tabId) {
+            var subsubtabs = document.getElementsByClassName('subcontent');
+            for (var i = 0; i < subsubtabs.length; i++) {
+                subsubtabs[i].classList.remove('subactive');
+            }
+            document.getElementById(tabId).classList.add('subactive');
         }
     </script>
 </head>
@@ -110,7 +126,7 @@
         <button class="btn" onclick="showTab('home')">홈</button>
         <button class="btn" onclick="showTab('recipe')">음식표</button>
         <button class="btn" onclick="showTab('farm')">농장파티</button>
-        <button class="btn" onclick="toggleSubTabArea()">레드우드</button>
+        <button class="btn" onclick="toggleSubTabArea()">탐색</button>
 
         <div id="home" class="content active">
             <h2>홈</h2>
@@ -124,29 +140,34 @@
             <h2>Undawn 농장파티 답안지</h2>
             <iframe class="airtable-embed" src="https://airtable.com/embed/appUkDUUJkh50ZcuM/shreeMYETNSfhK8eM" frameborder="0" width="100%" height="800" style="background: transparent; border: 1px solid #ccc;"></iframe>
         </div>
-        <div id="redwood" class="content">
-            <h2>레드우드</h2>
+        <div id="explore" class="content">
+            <h2>탐색</h2>
             <div id="subtab-area" class="subtab-area" style="display:none;">
-                <button class="subbtn" onclick="showSubTab('military')">군수품</button>
-                <button class="subbtn" onclick="showSubTab('medical')">구급상자</button>
-                <button class="subbtn" onclick="showSubTab('tools')">공구함</button>
-                <button class="subbtn" onclick="showSubTab('treasure')">보물지도</button>
+                <button class="subbtn" onclick="showSubTab('redwood-sub')">레드우드</button>
+                <div id="redwood-sub" class="subtab-content">
+                    <div class="subsubtab-area">
+                        <button class="subsubbtn" onclick="showSubSubTab('military')">군수품</button>
+                        <button class="subsubbtn" onclick="showSubSubTab('medical')">구급상자</button>
+                        <button class="subsubbtn" onclick="showSubSubTab('tools')">공구함</button>
+                        <button class="subsubbtn" onclick="showSubSubTab('treasure')">보물지도</button>
 
-                <div id="military" class="subcontent">
-                    <h3>군수품</h3>
-                    <p>군수품 관련 내용을 여기에 입력하세요.</p>
-                </div>
-                <div id="medical" class="subcontent">
-                    <h3>구급상자</h3>
-                    <p>구급상자 관련 내용을 여기에 입력하세요.</p>
-                </div>
-                <div id="tools" class="subcontent">
-                    <h3>공구함</h3>
-                    <p>공구함 관련 내용을 여기에 입력하세요.</p>
-                </div>
-                <div id="treasure" class="subcontent">
-                    <h3>보물지도</h3>
-                    <p>보물지도 관련 내용을 여기에 입력하세요.</p>
+                        <div id="military" class="subcontent">
+                            <h3>군수품</h3>
+                            <p>군수품 관련 내용을 여기에 입력하세요.</p>
+                        </div>
+                        <div id="medical" class="subcontent">
+                            <h3>구급상자</h3>
+                            <p>구급상자 관련 내용을 여기에 입력하세요.</p>
+                        </div>
+                        <div id="tools" class="subcontent">
+                            <h3>공구함</h3>
+                            <p>공구함 관련 내용을 여기에 입력하세요.</p>
+                        </div>
+                        <div id="treasure" class="subcontent">
+                            <h3>보물지도</h3>
+                            <p>보물지도 관련 내용을 여기에 입력하세요.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
