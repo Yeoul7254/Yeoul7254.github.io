@@ -68,10 +68,12 @@
         .update-list, .plan-list { margin: 0; padding-left: 18px; font-size: 1.08rem;}
         .subtab-area { margin: 26px 0 0 0; }
         .subtab-group, .subsubtab-area { display: flex; gap: 12px; flex-wrap: wrap; }
-        .subtab-content, .subcontent { display: none; margin-top: 22px; }
-        .subtab-content.active, .subcontent.active { display: block; }
+        .subtab-content, .subcontent { display: none; margin-top: 22px;}
+        .subtab-content.active, .subcontent.active { display: block;}
         .map-img { width: 100%; max-width: 700px; border-radius: 8px; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; border: 1px solid #ccc;}
-        h1 { margin-top: 0;}
+        .content { display: none; }
+        .content.active { display: block; }
+        h1 { margin-top: 0; }
     </style>
     <script>
         function showTab(tabId) {
@@ -85,22 +87,19 @@
             if(btn) btn.classList.add('active');
         }
         function showSubTab(tabId) {
-            // 모든 subtab-content 비활성화
             var subs = document.getElementsByClassName('subtab-content');
             for (var i = 0; i < subs.length; i++) subs[i].classList.remove('active');
             document.getElementById(tabId).classList.add('active');
-            // 모든 subbtn 비활성화
             var subBtns = document.getElementsByClassName('subbtn');
             for (var i = 0; i < subBtns.length; i++) subBtns[i].classList.remove('active');
             var btn = document.querySelector('.subbtn[data-subtab="'+tabId+'"]');
             if(btn) btn.classList.add('active');
-            showSubSubTab(tabId + '-military'); // 디폴트: 군수품
+            showSubSubTab(tabId + '-military');
         }
         function showSubSubTab(tabId) {
             var all = document.getElementsByClassName('subcontent');
             for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
             document.getElementById(tabId).classList.add('active');
-            // 버튼 active 처리
             var btns = document.getElementsByClassName('subsubbtn');
             for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
             var btn = document.querySelector('.subsubbtn[data-target="'+tabId+'"]');
@@ -166,9 +165,8 @@
             <div class="subtab-area">
                 <div class="subtab-group">
                     <button class="subbtn active" data-subtab="redwood" onclick="showSubTab('redwood')">레드우드</button>
-                    <!-- 추가 서브탭 있을 시 이곳에 -->
+                    <!-- 추가 서브탭 있으면 여기에 -->
                 </div>
-                <!-- 레드우드 하위탭 -->
                 <div id="redwood" class="subtab-content active">
                     <div class="subsubtab-area">
                         <button class="subsubbtn active" data-target="redwood-military" onclick="showSubSubTab('redwood-military')">군수품</button>
