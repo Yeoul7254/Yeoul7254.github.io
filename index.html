@@ -6,13 +6,13 @@
     <style>
         body {
             background: #f4f6fa;
-            margin: 0; padding: 0;
+            margin: 0;
+            padding: 0;
             font-family: 'Apple SD Gothic Neo', 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
         }
         .banner {
             width: 100%;
             text-align: center;
-            margin-bottom: 0;
         }
         .banner-img {
             width: 100%;
@@ -31,40 +31,24 @@
             position: relative;
             z-index: 10;
         }
-        .btn, .subbtn, .subsubbtn {
-            padding: 9px 30px 9px 30px;
-            font-size: 1.09rem;
-            border-radius: 36px;
-            border: 2.3px solid #707070;
-            font-weight: 700;
-            background: #fafbfc;
-            color: #454545;
-            transition: background 0.18s, color 0.16s, border 0.17s;
-            cursor: pointer;
-            outline: none;
+        .tab-group {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 36px;
         }
-        .btn.active, .subbtn.active, .subsubbtn.active,
-        .btn:hover, .subbtn:hover, .subsubbtn:hover {
-            background: #666;
-            color: #fff;
-            border-color: #666;
-        }
-        .link-btn {
-            display: inline-block;
-            margin-top: 7px;
+        .btn, .subbtn, .subsubbtn, .link-btn {
             padding: 11px 34px 11px 34px;
-            font-size: 1.13rem;
+            font-size: 1.11rem;
             border-radius: 36px;
-            border: 2.3px solid #707070;
+            border: 2px solid #707070;
             font-weight: 700;
             background: #fafbfc;
             color: #454545;
             transition: background 0.18s, color 0.16s, border 0.17s;
             cursor: pointer;
             outline: none;
-            text-decoration: none;
         }
-        .link-btn:hover {
+        .btn.active, .subbtn.active, .subsubbtn.active, .btn:hover, .subbtn:hover, .subsubbtn:hover, .link-btn:hover {
             background: #666;
             color: #fff;
             border-color: #666;
@@ -82,76 +66,45 @@
         .update-title { margin-top: 0; margin-bottom: 20px; font-size: 1.35rem; color: #299bce; letter-spacing: -1px;}
         .plan-title { margin-top: 0; margin-bottom: 20px; font-size: 1.28rem; color: #6b7684; letter-spacing: -1px;}
         .update-list, .plan-list { margin: 0; padding-left: 18px; font-size: 1.08rem;}
-        .subtab-area { margin: 20px 0 0 0; }
-        .subtab-content { display: none; margin-top: 12px; }
-        .subtab-active { display: block; }
-        .subsubtab-area { margin: 16px 0 0 0; display: flex; gap: 12px; }
-        .subbtn.selected, .btn.selected { background: #666; color: #fff; border-color: #666;}
-        .subcontent { display: none; margin-top: 20px; padding: 16px; background: #f1f3f5; border-radius: 8px; box-shadow: 0 2px 10px rgba(60,60,60,0.08);}
-        .subcontent.active { display: block; }
+        .subtab-area { margin: 26px 0 0 0; }
+        .subtab-group, .subsubtab-area { display: flex; gap: 12px; flex-wrap: wrap; }
+        .subtab-content, .subcontent { display: none; margin-top: 22px; }
+        .subtab-content.active, .subcontent.active { display: block; }
         .map-img { width: 100%; max-width: 700px; border-radius: 8px; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; border: 1px solid #ccc;}
         h1 { margin-top: 0;}
     </style>
     <script>
         function showTab(tabId) {
             var tabs = document.getElementsByClassName('content');
-            for (var i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove('active');
-            }
+            for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
             document.getElementById(tabId).classList.add('active');
-        }
-        function toggleSubTabArea() {
-            var area = document.getElementById('subtab-area');
-            if(area.style.display === 'block') {
-                area.style.display = 'none';
-                hideSubTab();
-            } else {
-                area.style.display = 'block';
-            }
-            showTab('explore');
+            // 메인탭 활성화
+            var mainBtns = document.getElementsByClassName('btn');
+            for (var i = 0; i < mainBtns.length; i++) mainBtns[i].classList.remove('active');
+            var btn = document.querySelector('.btn[data-tab="'+tabId+'"]');
+            if(btn) btn.classList.add('active');
         }
         function showSubTab(tabId) {
-            var subtabs = document.getElementsByClassName('subtab-content');
-            for (var i = 0; i < subtabs.length; i++) {
-                subtabs[i].classList.remove('subtab-active');
-            }
-            document.getElementById(tabId).classList.add('subtab-active');
-            // 하위 선택 초기화
-            var buttons = document.querySelectorAll('#' + tabId + ' .subbtn');
-            if (buttons.length > 0) showSubSubTab(buttons[0].getAttribute('data-target'));
-        }
-        function hideSubTab() {
-            var subtabs = document.getElementsByClassName('subtab-content');
-            for (var i = 0; i < subtabs.length; i++) {
-                subtabs[i].classList.remove('subtab-active');
-            }
-            hideSubSubTab();
+            // 모든 subtab-content 비활성화
+            var subs = document.getElementsByClassName('subtab-content');
+            for (var i = 0; i < subs.length; i++) subs[i].classList.remove('active');
+            document.getElementById(tabId).classList.add('active');
+            // 모든 subbtn 비활성화
+            var subBtns = document.getElementsByClassName('subbtn');
+            for (var i = 0; i < subBtns.length; i++) subBtns[i].classList.remove('active');
+            var btn = document.querySelector('.subbtn[data-subtab="'+tabId+'"]');
+            if(btn) btn.classList.add('active');
+            showSubSubTab(tabId + '-military'); // 디폴트: 군수품
         }
         function showSubSubTab(tabId) {
-            // subcontent 모두 숨김
-            var subcontents = document.getElementsByClassName('subcontent');
-            for (var i = 0; i < subcontents.length; i++) {
-                subcontents[i].classList.remove('active');
-            }
-            // 해당만 보임
+            var all = document.getElementsByClassName('subcontent');
+            for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
             document.getElementById(tabId).classList.add('active');
-            // 버튼 스타일 적용
-            var subbtns = document.querySelectorAll('.subsubtab-area .btn, .subsubtab-area .subbtn');
-            for (var i = 0; i < subbtns.length; i++) {
-                subbtns[i].classList.remove('selected');
-            }
-            var btn = document.querySelector('.subsubtab-area [data-target="'+tabId+'"]');
-            if(btn) btn.classList.add('selected');
-        }
-        function hideSubSubTab() {
-            var subcontents = document.getElementsByClassName('subcontent');
-            for (var i = 0; i < subcontents.length; i++) {
-                subcontents[i].classList.remove('active');
-            }
-            var subbtns = document.querySelectorAll('.subsubtab-area .btn, .subsubtab-area .subbtn');
-            for (var i = 0; i < subbtns.length; i++) {
-                subbtns[i].classList.remove('selected');
-            }
+            // 버튼 active 처리
+            var btns = document.getElementsByClassName('subsubbtn');
+            for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+            var btn = document.querySelector('.subsubbtn[data-target="'+tabId+'"]');
+            if(btn) btn.classList.add('active');
         }
     </script>
 </head>
@@ -161,25 +114,24 @@
     </div>
     <div class="content-area">
         <h1>Undawn 자료실</h1>
-        <button class="btn" onclick="showTab('home')">홈</button>
-        <button class="btn" onclick="showTab('recipe')">음식표</button>
-        <button class="btn" onclick="showTab('farm')">농장파티</button>
-        <button class="btn" onclick="toggleSubTabArea()">탐색</button>
+        <!-- 메인탭 -->
+        <div class="tab-group">
+            <button class="btn active" data-tab="home" onclick="showTab('home')">홈</button>
+            <button class="btn" data-tab="recipe" onclick="showTab('recipe')">음식표</button>
+            <button class="btn" data-tab="farm" onclick="showTab('farm')">농장파티</button>
+            <button class="btn" data-tab="explore" onclick="showTab('explore')">탐색</button>
+        </div>
         <!-- 홈 -->
         <div id="home" class="content active">
             <div style="display: flex; gap:32px; margin-bottom:36px;">
                 <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
-                    <a href="https://open.kakao.com/o/gpMK702c" target="_blank" style="display:block;">
-                        <img src="카카오톡.jpg" alt="카카오톡 로고" style="width:60px; height:60px; border-radius:16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); margin-bottom:11px;">
-                    </a>
-                    <div style="font-weight:600; font-size:1.09rem; margin-bottom:6px;">커뮤니티 오픈채팅방</div>
+                    <a href="https://open.kakao.com/o/gpMK702c" target="_blank"><img src="카카오톡.jpg" alt="카카오톡 로고" style="width:60px;height:60px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);margin-bottom:11px;"></a>
+                    <div style="font-weight:600;font-size:1.09rem;margin-bottom:6px;">커뮤니티 오픈채팅방</div>
                     <a href="https://open.kakao.com/o/gpMK702c" target="_blank" class="link-btn">바로가기</a>
                 </div>
                 <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
-                    <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank" style="display:block;">
-                        <img src="치지직.jpg" alt="라운지 로고" style="width:60px; height:60px; border-radius:16px; box-shadow:0 2px 8px rgba(0,0,0,0.12); margin-bottom:11px;">
-                    </a>
-                    <div style="font-weight:600; font-size:1.09rem; margin-bottom:6px;">라운지</div>
+                    <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank"><img src="치지직.jpg" alt="라운지 로고" style="width:60px;height:60px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);margin-bottom:11px;"></a>
+                    <div style="font-weight:600;font-size:1.09rem;margin-bottom:6px;">라운지</div>
                     <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank" class="link-btn">바로가기</a>
                 </div>
             </div>
@@ -208,23 +160,26 @@
             <h2>Undawn 농장파티 답안지</h2>
             <iframe class="airtable-embed" src="https://airtable.com/embed/appUkDUUJkh50ZcuM/shreeMYETNSfhK8eM" frameborder="0" width="100%" height="800" style="background: transparent; border: 1px solid #ccc;"></iframe>
         </div>
-        <!-- 탐색/서브탭/서브서브탭 모두 pill 스타일, 활성화된 것만 보임 -->
+        <!-- 탐색 탭과 서브탭/세부탭 -->
         <div id="explore" class="content">
             <h2>탐색</h2>
-            <div id="subtab-area" class="subtab-area" style="display:none;">
-                <button class="btn" onclick="showSubTab('redwood-sub')">레드우드</button>
-                <!-- 서브탭 컨텐츠는 하나만 보이게 -->
-                <div id="redwood-sub" class="subtab-content">
+            <div class="subtab-area">
+                <div class="subtab-group">
+                    <button class="subbtn active" data-subtab="redwood" onclick="showSubTab('redwood')">레드우드</button>
+                    <!-- 추가 서브탭 있을 시 이곳에 -->
+                </div>
+                <!-- 레드우드 하위탭 -->
+                <div id="redwood" class="subtab-content active">
                     <div class="subsubtab-area">
-                        <button class="btn" data-target="military" onclick="showSubSubTab('military')">군수품</button>
-                        <button class="btn" data-target="medical" onclick="showSubSubTab('medical')">구급상자</button>
-                        <button class="btn" data-target="tools" onclick="showSubSubTab('tools')">공구함</button>
-                        <button class="btn" data-target="treasure" onclick="showSubSubTab('treasure')">보물지도</button>
+                        <button class="subsubbtn active" data-target="redwood-military" onclick="showSubSubTab('redwood-military')">군수품</button>
+                        <button class="subsubbtn" data-target="redwood-medical" onclick="showSubSubTab('redwood-medical')">구급상자</button>
+                        <button class="subsubbtn" data-target="redwood-tools" onclick="showSubSubTab('redwood-tools')">공구함</button>
+                        <button class="subsubbtn" data-target="redwood-treasure" onclick="showSubSubTab('redwood-treasure')">보물지도</button>
                     </div>
-                    <div id="military" class="subcontent"> <h3>군수품</h3> <p>군수품 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="medical" class="subcontent"> <h3>구급상자</h3> <p>구급상자 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="tools" class="subcontent"> <h3>공구함</h3> <p>공구함 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="treasure" class="subcontent">
+                    <div id="redwood-military" class="subcontent active"><h3>군수품</h3><p>군수품 관련 내용을 여기에 입력하세요.</p></div>
+                    <div id="redwood-medical" class="subcontent"><h3>구급상자</h3><p>구급상자 관련 내용을 여기에 입력하세요.</p></div>
+                    <div id="redwood-tools" class="subcontent"><h3>공구함</h3><p>공구함 관련 내용을 여기에 입력하세요.</p></div>
+                    <div id="redwood-treasure" class="subcontent">
                         <h3>보물지도</h3>
                         <img src="redeuudeu-bomuljido.jpg" alt="레드우드 보물지도" class="map-img">
                         <iframe class="airtable-embed" src="https://airtable.com/embed/appHW7ywc4xQG1rLE/shr8eEP2hlb11Rbp6" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
