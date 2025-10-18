@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Undawn 자료실</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
         body {
             background: #f4f6fa;
@@ -48,7 +48,8 @@
             cursor: pointer;
             outline: none;
         }
-        .btn.active, .subbtn.active, .subsubbtn.active, .btn:hover, .subbtn:hover, .subsubbtn:hover {
+        .btn.active, .subbtn.active, .subsubbtn.active, 
+        .btn:hover, .subbtn:hover, .subsubbtn:hover {
             background: #666;
             color: #fff;
             border-color: #666;
@@ -74,7 +75,6 @@
         .content { display: none; }
         .content.active { display: block; }
         h1 { margin-top: 0; }
-        /* 모바일 반응형 */
         @media (max-width: 600px) {
             .content-area {
                 padding: 14px 4vw 22px 4vw;
@@ -126,123 +126,223 @@
             for (var i = 0; i < mainBtns.length; i++) mainBtns[i].classList.remove('active');
             var btn = document.querySelector('.btn[data-tab="'+tabId+'"]');
             if(btn) btn.classList.add('active');
+
+            // 하위탭 초기화: 선택된 서브탭과 하위탭 숨기기
+            var subtabContents = document.getElementsByClassName('subtab-content');
+            for (var i = 0; i < subtabContents.length; i++) {
+                subtabContents[i].classList.remove('active');
+            }
+            var subBtns = document.getElementsByClassName('subbtn');
+            for (var j = 0; j < subBtns.length; j++) {
+                subBtns[j].classList.remove('active');
+            }
+            var subsubContents = document.getElementsByClassName('subcontent');
+            for (var k = 0; k < subsubContents.length; k++) {
+                subsubContents[k].classList.remove('active');
+            }
         }
         function showSubTab(tabId) {
             var subs = document.getElementsByClassName('subtab-content');
             for (var i = 0; i < subs.length; i++) subs[i].classList.remove('active');
-            document.getElementById(tabId).classList.add('active');
+            var tabContent = document.getElementById(tabId);
+            if (tabContent) tabContent.classList.add('active');
+
             var subBtns = document.getElementsByClassName('subbtn');
-            for (var i = 0; i < subBtns.length; i++) subBtns[i].classList.remove('active');
+            for (var j = 0; j < subBtns.length; j++) subBtns[j].classList.remove('active');
             var btn = document.querySelector('.subbtn[data-subtab="'+tabId+'"]');
-            if(btn) btn.classList.add('active');
-            showSubSubTab(tabId + '-military');
+            if (btn) btn.classList.add('active');
+
+            // 하위탭 초기화 - 숨김 처리
+            var subsubContents = document.getElementsByClassName('subcontent');
+            for (var k = 0; k < subsubContents.length; k++) {
+                subsubContents[k].classList.remove('active');
+            }
+            var subsubBtns = document.getElementsByClassName('subsubbtn');
+            for (var m=0; m<subsubBtns.length; m++) {
+                subsubBtns[m].classList.remove('active');
+            }
         }
         function showSubSubTab(tabId) {
-            var all = document.getElementsByClassName('subcontent');
-            for (var i = 0; i < all.length; i++) all[i].classList.remove('active');
-            document.getElementById(tabId).classList.add('active');
+            var subcontents = document.getElementsByClassName('subcontent');
+            for (var i = 0; i < subcontents.length; i++) subcontents[i].classList.remove('active');
+            var content = document.getElementById(tabId);
+            if (content) content.classList.add('active');
+
             var btns = document.getElementsByClassName('subsubbtn');
-            for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+            for (var i=0; i<btns.length; i++) btns[i].classList.remove('active');
             var btn = document.querySelector('.subsubbtn[data-target="'+tabId+'"]');
             if(btn) btn.classList.add('active');
         }
     </script>
 </head>
 <body>
-    <div class="banner">
-        <img src="언던.jpg" alt="베너 이미지" class="banner-img">
+<div class="banner">
+    <img src="언던.jpg" alt="배너 이미지" class="banner-img" />
+</div>
+<div class="content-area">
+    <h1>Undawn 자료실</h1>
+    <div class="tab-group">
+        <button class="btn active" data-tab="home" onclick="showTab('home')">홈</button>
+        <button class="btn" data-tab="recipe" onclick="showTab('recipe')">음식표</button>
+        <button class="btn" data-tab="farm" onclick="showTab('farm')">농장파티</button>
+        <button class="btn" data-tab="explore" onclick="showTab('explore')">탐색</button>
     </div>
-    <div class="content-area">
-        <h1>Undawn 자료실</h1>
-        <!-- 메인탭 -->
-        <div class="tab-group">
-            <button class="btn active" data-tab="home" onclick="showTab('home')">홈</button>
-            <button class="btn" data-tab="recipe" onclick="showTab('recipe')">음식표</button>
-            <button class="btn" data-tab="farm" onclick="showTab('farm')">농장파티</button>
-            <button class="btn" data-tab="explore" onclick="showTab('explore')">탐색</button>
-        </div>
-        <!-- 홈 -->
-        <div id="home" class="content active">
-            <div style="display: flex; gap:32px; margin-bottom:36px;">
-                <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
-                    <a href="https://open.kakao.com/o/gpMK702c" target="_blank"><img src="카카오톡.jpg" alt="카카오톡 로고" style="width:60px;height:60px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);margin-bottom:11px;"></a>
-                    <div style="font-weight:600;font-size:1.09rem;margin-bottom:6px;">커뮤니티 오픈채팅방</div>
-                    <a href="https://open.kakao.com/o/gpMK702c" target="_blank">바로가기</a>
-                </div>
-                <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
-                    <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank"><img src="치지직.jpg" alt="라운지 로고" style="width:60px;height:60px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);margin-bottom:11px;"></a>
-                    <div style="font-weight:600;font-size:1.09rem;margin-bottom:6px;">라운지</div>
-                    <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank">바로가기</a>
-                </div>
+    <div id="home" class="content active">
+        <div style="display: flex; gap:32px; margin-bottom:36px;">
+            <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
+                <a href="https://open.kakao.com/o/gpMK702c" target="_blank"><img src="카카오톡.jpg" alt="카카오톡 로고" style="width:60px;height:60px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);margin-bottom:11px;"></a>
+                <div style="font-weight:600;font-size:1.09rem;margin-bottom:6px;">커뮤니티 오픈채팅방</div>
+                <a href="https://open.kakao.com/o/gpMK702c" target="_blank">바로가기</a>
             </div>
-            <div class="update-card">
-                <h2 class="update-title">업데이트 내역</h2>
-                <ul class="update-list">
-                    <li>- 탐색 레드우드 보물지도 내용 생성 (2025.10.16)</li>
-                </ul>
-            </div>
-            <div class="plan-card">
-                <h2 class="plan-title">업데이트 예정 내역</h2>
-                <ul class="plan-list">
-                    <li>- 어둠의 도시_지하 탐색 내용 생성</li>
-                    <li>- 공허를 만든 도시 탐색 내용 생성</li>
-                    <li>- 각종 파일작 내용 생성</li>
-                </ul>
+            <div style="display:flex; flex-direction:column; align-items:flex-start; min-width:170px;">
+                <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank"><img src="치지직.jpg" alt="라운지 로고" style="width:60px;height:60px;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,0.12);margin-bottom:11px;"></a>
+                <div style="font-weight:600;font-size:1.09rem;margin-bottom:6px;">라운지</div>
+                <a href="https://game.naver.com/lounge/UNDAWN/home" target="_blank">바로가기</a>
             </div>
         </div>
-        <!-- 음식표 -->
-        <div id="recipe" class="content">
-            <h2>Undawn 음식 레시피</h2>
-            <iframe class="airtable-embed" src="https://airtable.com/embed/app5I6URAjgznfAu1/shranTuFZ8QxrIt9y" frameborder="0" width="100%" height="800" style="background: transparent; border: 1px solid #ccc;"></iframe>
+        <div class="update-card">
+            <h2 class="update-title">업데이트 내역</h2>
+            <ul class="update-list">
+                <li>- 탐색 레드우드 보물지도 내용 생성 (2025.10.16)</li>
+            </ul>
         </div>
-        <!-- 농장파티 -->
-        <div id="farm" class="content">
-            <h2>Undawn 농장파티 답안지</h2>
-            <iframe class="airtable-embed" src="https://airtable.com/embed/appUkDUUJkh50ZcuM/shreeMYETNSfhK8eM" frameborder="0" width="100%" height="800" style="background: transparent; border: 1px solid #ccc;"></iframe>
-        </div>
-        <!-- 탐색 -->
-        <div id="explore" class="content">
-            <h2>탐색</h2>
-            <div class="subtab-area">
-                <div class="subtab-group">
-                    <button class="subbtn active" data-subtab="redwood" onclick="showSubTab('redwood')">레드우드</button>
-                    <button class="subbtn" data-subtab="darkcity" onclick="showSubTab('darkcity')">어둠의 도시</button>
-                </div>
-                <!-- 레드우드 하위탭 -->
-                <div id="redwood" class="subtab-content active">
-                    <div class="subsubtab-area">
-                        <button class="subsubbtn active" data-target="redwood-military" onclick="showSubSubTab('redwood-military')">군수품</button>
-                        <button class="subsubbtn" data-target="redwood-medical" onclick="showSubSubTab('redwood-medical')">구급상자</button>
-                        <button class="subsubbtn" data-target="redwood-tools" onclick="showSubSubTab('redwood-tools')">공구함</button>
-                        <button class="subsubbtn" data-target="redwood-treasure" onclick="showSubSubTab('redwood-treasure')">보물지도</button>
-                    </div>
-                    <div id="redwood-military" class="subcontent active"><h3>군수품</h3><p>군수품 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="redwood-medical" class="subcontent"><h3>구급상자</h3><p>구급상자 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="redwood-tools" class="subcontent"><h3>공구함</h3><p>공구함 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="redwood-treasure" class="subcontent">
-                        <h3>보물지도</h3>
-                        <img src="redeuudeu-bomuljido.jpg" alt="레드우드 보물지도" class="map-img">
-                        <iframe class="airtable-embed" src="https://airtable.com/embed/appHW7ywc4xQG1rLE/shr8eEP2hlb11Rbp6" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
-                    </div>
-                </div>
-                <!-- 어둠의 도시 하위탭 -->
-                <div id="darkcity" class="subtab-content">
-                    <div class="subsubtab-area">
-                        <button class="subsubbtn active" data-target="darkcity-military" onclick="showSubSubTab('darkcity-military')">군수품</button>
-                        <button class="subsubbtn" data-target="darkcity-medical" onclick="showSubSubTab('darkcity-medical')">구급상자</button>
-                        <button class="subsubbtn" data-target="darkcity-tools" onclick="showSubSubTab('darkcity-tools')">공구함</button>
-                        <button class="subsubbtn" data-target="darkcity-treasure" onclick="showSubSubTab('darkcity-treasure')">보물지도</button>
-                    </div>
-                    <div id="darkcity-military" class="subcontent active"><h3>군수품</h3><p>어둠의 도시 군수품 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="darkcity-medical" class="subcontent"><h3>구급상자</h3><p>어둠의 도시 구급상자 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="darkcity-tools" class="subcontent"><h3>공구함</h3><p>어둠의 도시 공구함 관련 내용을 여기에 입력하세요.</p></div>
-                    <div id="darkcity-treasure" class="subcontent">
-                        <h3>보물지도</h3>
-                        <p>어둠의 도시 보물지도 관련 내용을 여기에 입력하세요.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="plan-card">
+            <h2 class="plan-title">업데이트 예정 내역</h2>
+            <ul class="plan-list">
+                <li>- 어둠의 도시_지하 탐색 내용 생성</li>
+                <li>- 공허를 만든 도시 탐색 내용 생성</li>
+                <li>- 각종 파일작 내용 생성</li>
+            </ul>
         </div>
     </div>
+    <div id="recipe" class="content">
+        <h2>Undawn 음식 레시피</h2>
+        <iframe class="airtable-embed" src="https://airtable.com/embed/app5I6URAjgznfAu1/shranTuFZ8QxrIt9y" frameborder="0" width="100%" height="800" style="background: transparent; border: 1px solid #ccc;"></iframe>
+    </div>
+    <div id="farm" class="content">
+        <h2>Undawn 농장파티 답안지</h2>
+        <iframe class="airtable-embed" src="https://airtable.com/embed/appUkDUUJkh50ZcuM/shreeMYETNSfhK8eM" frameborder="0" width="100%" height="800" style="background: transparent; border: 1px solid #ccc;"></iframe>
+    </div>
+    <div id="explore" class="content">
+        <h2>탐색</h2>
+        <div class="subtab-area">
+            <div class="subtab-group">
+                <button class="subbtn" data-subtab="redwood" onclick="showSubTab('redwood')">레드우드</button>
+                <button class="subbtn" data-subtab="central" onclick="showSubTab('central')">센트럴 평원</button>
+                <button class="subbtn" data-subtab="seinz" onclick="showSubTab('seinz')">세인즈 힐</button>
+                <button class="subbtn" data-subtab="lostcity" onclick="showSubTab('lostcity')">잃어버린 도시</button>
+                <button class="subbtn" data-subtab="kohler" onclick="showSubTab('kohler')">콜러 광산</button>
+                <button class="subbtn" data-subtab="golden" onclick="showSubTab('golden')">황금 사막</button>
+                <button class="subbtn" data-subtab="origin" onclick="showSubTab('origin')">오리진 섬</button>
+                <button class="subbtn" data-subtab="olly" onclick="showSubTab('olly')">올리 마운틴</button>
+                <button class="subbtn" data-subtab="darkcity" onclick="showSubTab('darkcity')">어둠의 도시</button>
+                <button class="subbtn" data-subtab="voidcity" onclick="showSubTab('voidcity')">공허를 만든 도시</button>
+            </div>
+
+            <!-- 레드우드 -->
+            <div id="redwood" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="redwood-military" onclick="showSubSubTab('redwood-military')">군수품</button>
+                    <button class="subsubbtn" data-target="redwood-medical" onclick="showSubSubTab('redwood-medical')">구급상자</button>
+                    <button class="subsubbtn" data-target="redwood-tools" onclick="showSubSubTab('redwood-tools')">공구함</button>
+                    <button class="subsubbtn" data-target="redwood-treasure" onclick="showSubSubTab('redwood-treasure')">보물지도</button>
+                </div>
+                <div id="redwood-military" class="subcontent"><h3>군수품</h3><p>군수품 관련 내용을 여기에 입력하세요.</p></div>
+                <div id="redwood-medical" class="subcontent"><h3>구급상자</h3><p>구급상자 관련 내용을 여기에 입력하세요.</p></div>
+                <div id="redwood-tools" class="subcontent"><h3>공구함</h3><p>공구함 관련 내용을 여기에 입력하세요.</p></div>
+                <div id="redwood-treasure" class="subcontent">
+                    <h3>보물지도</h3>
+                    <img src="redeuudeu-bomuljido.jpg" alt="레드우드 보물지도" class="map-img">
+                    <iframe class="airtable-embed" src="https://airtable.com/embed/appHW7ywc4xQG1rLE/shr8eEP2hlb11Rbp6" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
+                </div>
+            </div>
+
+            <!-- 센트럴 평원 -->
+            <div id="central" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="central-military" onclick="showSubSubTab('central-military')">군수품</button>
+                    <button class="subsubbtn" data-target="central-medical" onclick="showSubSubTab('central-medical')">구급상자</button>
+                </div>
+                <div id="central-military" class="subcontent"><h3>군수품</h3><p>센트럴 평원 군수품 내용</p></div>
+                <div id="central-medical" class="subcontent"><h3>구급상자</h3><p>센트럴 평원 구급상자 내용</p></div>
+            </div>
+
+            <!-- 세인즈 힐 -->
+            <div id="seinz" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="seinz-military" onclick="showSubSubTab('seinz-military')">군수품</button>
+                </div>
+                <div id="seinz-military" class="subcontent"><h3>군수품</h3><p>세인즈 힐 군수품 내용</p></div>
+            </div>
+
+            <!-- 잃어버린 도시 -->
+            <div id="lostcity" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="lostcity-military" onclick="showSubSubTab('lostcity-military')">군수품</button>
+                </div>
+                <div id="lostcity-military" class="subcontent"><h3>군수품</h3><p>잃어버린 도시 군수품 내용</p></div>
+            </div>
+
+            <!-- 콜러 광산 -->
+            <div id="kohler" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="kohler-military" onclick="showSubSubTab('kohler-military')">군수품</button>
+                </div>
+                <div id="kohler-military" class="subcontent"><h3>군수품</h3><p>콜러 광산 군수품 내용</p></div>
+            </div>
+
+            <!-- 황금 사막 -->
+            <div id="golden" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="golden-military" onclick="showSubSubTab('golden-military')">군수품</button>
+                </div>
+                <div id="golden-military" class="subcontent"><h3>군수품</h3><p>황금 사막 군수품 내용</p></div>
+            </div>
+
+            <!-- 오리진 섬 -->
+            <div id="origin" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="origin-military" onclick="showSubSubTab('origin-military')">군수품</button>
+                </div>
+                <div id="origin-military" class="subcontent"><h3>군수품</h3><p>오리진 섬 군수품 내용</p></div>
+            </div>
+
+            <!-- 올리 마운틴 -->
+            <div id="olly" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="olly-military" onclick="showSubSubTab('olly-military')">군수품</button>
+                </div>
+                <div id="olly-military" class="subcontent"><h3>군수품</h3><p>올리 마운틴 군수품 내용</p></div>
+            </div>
+
+            <!-- 어둠의 도시 -->
+            <div id="darkcity" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="darkcity-military" onclick="showSubSubTab('darkcity-military')">군수품</button>
+                    <button class="subsubbtn" data-target="darkcity-medical" onclick="showSubSubTab('darkcity-medical')">구급상자</button>
+                    <button class="subsubbtn" data-target="darkcity-tools" onclick="showSubSubTab('darkcity-tools')">공구함</button>
+                    <button class="subsubbtn" data-target="darkcity-treasure" onclick="showSubSubTab('darkcity-treasure')">보물지도</button>
+                </div>
+                <div id="darkcity-military" class="subcontent"><h3>군수품</h3><p>어둠의 도시 군수품 관련 내용을 여기에 입력하세요.</p></div>
+                <div id="darkcity-medical" class="subcontent"><h3>구급상자</h3><p>어둠의 도시 구급상자 관련 내용을 여기에 입력하세요.</p></div>
+                <div id="darkcity-tools" class="subcontent"><h3>공구함</h3><p>어둠의 도시 공구함 관련 내용을 여기에 입력하세요.</p></div>
+                <div id="darkcity-treasure" class="subcontent">
+                    <h3>보물지도</h3>
+                    <p>어둠의 도시 보물지도 관련 내용을 여기에 입력하세요.</p>
+                </div>
+            </div>
+
+            <!-- 공허를 만든 도시 -->
+            <div id="voidcity" class="subtab-content">
+                <div class="subsubtab-area">
+                    <button class="subsubbtn" data-target="voidcity-military" onclick="showSubSubTab('voidcity-military')">군수품</button>
+                    <button class="subsubbtn" data-target="voidcity-medical" onclick="showSubSubTab('voidcity-medical')">구급상자</button>
+                </div>
+                <div id="voidcity-military" class="subcontent"><h3>군수품</h3><p>공허를 만든 도시 군수품 내용</p></div>
+                <div id="voidcity-medical" class="subcontent"><h3>구급상자</h3><p>공허를 만든 도시 구급상자 내용</p></div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
