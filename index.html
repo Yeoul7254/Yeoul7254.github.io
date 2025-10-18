@@ -47,8 +47,11 @@
             transition: background 0.18s, color 0.16s, border 0.17s;
             cursor: pointer;
             outline: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-        .btn.active, .subbtn.active, .subsubbtn.active, 
+        .btn.active, .subbtn.active, .subsubbtn.active,
         .btn:hover, .subbtn:hover, .subsubbtn:hover {
             background: #666;
             color: #fff;
@@ -92,6 +95,7 @@
                 font-size: 1rem;
                 width: 100%;
                 border-radius: 18px;
+                box-sizing: border-box;
             }
             .subtab-group, .subsubtab-area {
                 flex-direction: column;
@@ -120,53 +124,67 @@
     <script>
         function showTab(tabId) {
             var tabs = document.getElementsByClassName('content');
-            for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
-            document.getElementById(tabId).classList.add('active');
-            var mainBtns = document.getElementsByClassName('btn');
-            for (var i = 0; i < mainBtns.length; i++) mainBtns[i].classList.remove('active');
-            var btn = document.querySelector('.btn[data-tab="'+tabId+'"]');
-            if(btn) btn.classList.add('active');
+            for (let tab of tabs) tab.classList.remove('active');
+            var activeTab = document.getElementById(tabId);
+            if(activeTab) activeTab.classList.add('active');
 
-            // 모든 서브탭, 하위 콘텐츠 비활성화
+            // 메인탭 버튼 상태 변경
+            var mainBtns = document.getElementsByClassName('btn');
+            for (let btn of mainBtns) btn.classList.remove('active');
+            let activeBtn = document.querySelector('.btn[data-tab="'+tabId+'"]');
+            if(activeBtn) activeBtn.classList.add('active');
+
+            // 서브탭 및 하위탭 초기화 및 전체 서브탭 보이기
             var subtabContents = document.getElementsByClassName('subtab-content');
             for (let st of subtabContents) st.classList.remove('active');
             var subBtns = document.getElementsByClassName('subbtn');
-            for (let sb of subBtns) sb.classList.remove('active');
+            for (let sb of subBtns) {
+                sb.classList.remove('active');
+                sb.style.display = 'inline-flex';
+            }
             var subsubContents = document.getElementsByClassName('subcontent');
             for (let sc of subsubContents) sc.classList.remove('active');
         }
 
-        function toggleSubTab(tabId) {
-            var tabContent = document.getElementById(tabId);
+        function toggleSubTabVisibility(tabId) {
             var subBtns = document.getElementsByClassName('subbtn');
-            if (tabContent.classList.contains('active')) {
+            var tabContent = document.getElementById(tabId);
+            var isActive = tabContent.classList.contains('active');
+
+            if (isActive) {
+                // 해제하면 모든 서브탭 버튼 다시 표시
+                for (let btn of subBtns) {
+                    btn.style.display = 'inline-flex';
+                }
                 tabContent.classList.remove('active');
                 var btn = document.querySelector('.subbtn[data-subtab="' + tabId + '"]');
                 if(btn) btn.classList.remove('active');
             } else {
+                // 다른 서브탭 버튼 숨기고 탭 콘텐츠 보여줌
+                for (let btn of subBtns) {
+                    if(btn.getAttribute('data-subtab') === tabId) {
+                        btn.style.display = 'inline-flex';
+                    } else {
+                        btn.style.display = 'none';
+                    }
+                }
                 var allContents = document.getElementsByClassName('subtab-content');
-                for(var i=0;i<allContents.length;i++){
-                    allContents[i].classList.remove('active');
-                }
-                for(var j=0;j<subBtns.length;j++){
-                    subBtns[j].classList.remove('active');
-                }
+                for(let c of allContents) c.classList.remove('active');
                 tabContent.classList.add('active');
                 var btn = document.querySelector('.subbtn[data-subtab="' + tabId + '"]');
                 if(btn) btn.classList.add('active');
+
+                // 하위탭 모두 숨김
                 var allSubSub = document.getElementsByClassName('subcontent');
-                for(var k=0;k<allSubSub.length; k++){
-                    allSubSub[k].classList.remove('active');
-                }
+                for(let c of allSubSub) c.classList.remove('active');
             }
         }
 
         function showSubSubTab(tabId) {
-            var subcontents = document.getElementsByClassName('subcontent');
-            for(let c of subcontents) c.classList.remove('active');
+            var all = document.getElementsByClassName('subcontent');
+            for(let c of all) c.classList.remove('active');
             var content = document.getElementById(tabId);
             if(content) content.classList.add('active');
-
             var btns = document.getElementsByClassName('subsubbtn');
             for(let b of btns) b.classList.remove('active');
             var btn = document.querySelector('.subsubbtn[data-target="'+tabId+'"]');
@@ -176,7 +194,7 @@
 </head>
 <body>
 <div class="banner">
-    <img src="언던.jpg" alt="베너 이미지" class="banner-img" />
+    <img src="언던.jpg" alt="배너 이미지" class="banner-img" />
 </div>
 <div class="content-area">
     <h1>Undawn 자료실</h1>
@@ -228,16 +246,16 @@
         <h2>탐색</h2>
         <div class="subtab-area">
             <div class="subtab-group">
-                <button class="subbtn" data-subtab="redwood" onclick="toggleSubTab('redwood')">레드우드</button>
-                <button class="subbtn" data-subtab="central" onclick="toggleSubTab('central')">센트럴 평원</button>
-                <button class="subbtn" data-subtab="seinz" onclick="toggleSubTab('seinz')">세인즈 힐</button>
-                <button class="subbtn" data-subtab="lostcity" onclick="toggleSubTab('lostcity')">잃어버린 도시</button>
-                <button class="subbtn" data-subtab="kohler" onclick="toggleSubTab('kohler')">콜러 광산</button>
-                <button class="subbtn" data-subtab="golden" onclick="toggleSubTab('golden')">황금 사막</button>
-                <button class="subbtn" data-subtab="origin" onclick="toggleSubTab('origin')">오리진 섬</button>
-                <button class="subbtn" data-subtab="olly" onclick="toggleSubTab('olly')">올리 마운틴</button>
-                <button class="subbtn" data-subtab="darkcity" onclick="toggleSubTab('darkcity')">어둠의 도시</button>
-                <button class="subbtn" data-subtab="voidcity" onclick="toggleSubTab('voidcity')">공허를 만든 도시</button>
+                <button class="subbtn" data-subtab="redwood" onclick="toggleSubTabVisibility('redwood')">레드우드</button>
+                <button class="subbtn" data-subtab="central" onclick="toggleSubTabVisibility('central')">센트럴 평원</button>
+                <button class="subbtn" data-subtab="seinz" onclick="toggleSubTabVisibility('seinz')">세인즈 힐</button>
+                <button class="subbtn" data-subtab="lostcity" onclick="toggleSubTabVisibility('lostcity')">잃어버린 도시</button>
+                <button class="subbtn" data-subtab="kohler" onclick="toggleSubTabVisibility('kohler')">콜러 광산</button>
+                <button class="subbtn" data-subtab="golden" onclick="toggleSubTabVisibility('golden')">황금 사막</button>
+                <button class="subbtn" data-subtab="origin" onclick="toggleSubTabVisibility('origin')">오리진 섬</button>
+                <button class="subbtn" data-subtab="olly" onclick="toggleSubTabVisibility('olly')">올리 마운틴</button>
+                <button class="subbtn" data-subtab="darkcity" onclick="toggleSubTabVisibility('darkcity')">어둠의 도시</button>
+                <button class="subbtn" data-subtab="voidcity" onclick="toggleSubTabVisibility('voidcity')">공허를 만든 도시</button>
             </div>
             <!-- 레드우드 -->
             <div id="redwood" class="subtab-content">
@@ -252,7 +270,7 @@
                 <div id="redwood-tools" class="subcontent"><h3>공구함</h3><p>공구함 관련 내용을 여기에 입력하세요.</p></div>
                 <div id="redwood-treasure" class="subcontent">
                     <h3>보물지도</h3>
-                    <img src="redeuudeu-bomuljido.jpg" alt="레드우드 보물지도" class="map-img" />
+                    <img src="redeuudeu-bomuljido.jpg" alt="레드우드 보물지도" class="map-img"/>
                     <iframe class="airtable-embed" src="https://airtable.com/embed/appHW7ywc4xQG1rLE/shr8eEP2hlb11Rbp6" frameborder="0" onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
                 </div>
             </div>
